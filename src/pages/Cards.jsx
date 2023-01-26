@@ -22,8 +22,8 @@ const Cards = () => {
                     <span>01/35</span>
                     <p>Word</p>
                     <div>
-                        <button><img src={arrowLeft} alt="Previous card" /></button>
-                        <button><img src={arrowRight} alt="Next card" /></button>
+                        <button className="buttonClass"><img src={arrowLeft} alt="Previous card" /></button>
+                        <button className="buttonClass"><img src={arrowRight} alt="Next card" /></button>
                     </div>
                 </div>
             </div>
