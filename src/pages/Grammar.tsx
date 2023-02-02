@@ -4,24 +4,23 @@ import { SheetRows } from "../components/SheetRows";
 
 const Grammar = () => {
 
-    const [file, setFile] = useState();
-    const [sheetData, setSheetData] = useState();
-    const [columns, setColumns] = useState();
-    const [wordIndex, setWordIndex] = useState(0);
-    const [translationIndex, setTranslationIndex] = useState(1);
+    const [file, setFile] = useState<string[][]>();
+    const [sheetData, setSheetData] = useState<string[][]>();
+    const [columns, setColumns] = useState<string[]>();
+    const [wordIndex, setWordIndex] = useState<number>(0);
+    const [translationIndex, setTranslationIndex] = useState<number>(1);
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: any) => {
         e.preventDefault();
         setSheetData(file);
     }
 
-    const handleFileUpload = async (e) => {
-
-        const localFile = e.target.files[0];
+    const handleFileUpload = async (e: any) => {
+        const localFile = (e.target.files[0]);
         const data = await localFile.arrayBuffer();
         const workbook = readFile(data);
         const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-        const jsonData = utils.sheet_to_json(worksheet, {
+        const jsonData: any = utils.sheet_to_json(worksheet, {
             header: 1
         })
         setFile(jsonData)
@@ -47,13 +46,13 @@ const Grammar = () => {
 
                     {columns === undefined ? <></>:
                     <div id="selectContainer">
-                        <select onChange={e => setWordIndex(columns.indexOf(e.target.value))}>
-                            {columns.map((data, index) => (
+                        <select onChange={ (e: any) => setWordIndex(columns.indexOf(e.target.value))}>
+                            {columns.map((data: string, index: number) => (
                                 <option key={index} value={data}>{data}</option>
                             ))}
                         </select>
-                        <select onChange={e => setTranslationIndex(columns.indexOf(e.target.value))}>
-                            {columns.reverse().map((data, index) => (
+                        <select onChange={ (e: any) => setTranslationIndex(columns.indexOf(e.target.value))}>
+                            {columns.reverse().map((data: string, index: number) => (
                                 <option key={index} value={data}>{data}</option>
                             ))}
                         </select>
@@ -65,8 +64,8 @@ const Grammar = () => {
                 {sheetData === undefined ? <></>:
                     <SheetRows 
                     sheet={sheetData} 
-                    word={wordIndex} 
-                    translation={translationIndex}
+                    wordIndex={wordIndex} 
+                    translationIndex={translationIndex}
                     />
                 }
             </div>
