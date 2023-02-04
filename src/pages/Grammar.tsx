@@ -1,30 +1,45 @@
-import { useState } from "react";
-import { readFile, utils } from "xlsx";
+import React, { useState, useRef } from "react";
+import { read, utils } from "xlsx";
 import { SheetRows } from "../components/SheetRows";
 
-const Grammar = () => {
+const Import = () => {
 
-    const [file, setFile] = useState<string[][]>();
-    const [sheetData, setSheetData] = useState<string[][]>();
-    const [columns, setColumns] = useState<string[]>();
-    const [wordIndex, setWordIndex] = useState<number>(0);
-    const [translationIndex, setTranslationIndex] = useState<number>(1);
+    const [sheetData, setSheetData] = useState<string[][]>([[]]);
 
-    const handleSubmit = (e: any) => {
+    const file1 = useRef<string[][]>([[]]);
+    const columns1 = useRef<string[]>([]);
+    const wordIndex1 = useRef<number>(0);
+    const translationIndex1 = useRef<number>(1);
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setSheetData(file);
+        const filteredSheet: string[][] = file1.current
+        .filter( (data: string[], index: number) => {
+            if (!data[wordIndex1.current] || !data[translationIndex1.current] ||index === 0) return false
+            return true;
+          })
+        .map((data: string[]) => {
+            return [ data[wordIndex1.current], data[translationIndex1.current]]
+        });
+        setSheetData(filteredSheet);
     }
 
-    const handleFileUpload = async (e: any) => {
-        const localFile = (e.target.files[0]);
-        const data = await localFile.arrayBuffer();
-        const workbook = readFile(data);
-        const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-        const jsonData: any = utils.sheet_to_json(worksheet, {
-            header: 1
-        })
-        setFile(jsonData)
-        setColumns(jsonData[0]);
+    const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            const localFile = (e.target.files[0]);
+            const data = await localFile.arrayBuffer();
+            const workbook = read(data);
+            const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+            const jsonData: string[][] = utils.sheet_to_json(worksheet, {
+                header: 1
+            })
+            file1.current = jsonData
+            columns1.current = jsonData[0];
+        }
+    }
+
+    const handleSelector = (e: React.ChangeEvent<HTMLSelectElement>,column: React.MutableRefObject<number>) => {
+        column.current = columns1.current.indexOf(e.target.value);
     }
     
     return (
@@ -44,15 +59,15 @@ const Grammar = () => {
                     onChange={(e) => handleFileUpload(e)}
                     />
 
-                    {columns === undefined ? <></>:
+                    {columns1.current.length === 1 &&
                     <div id="selectContainer">
-                        <select onChange={ (e: any) => setWordIndex(columns.indexOf(e.target.value))}>
-                            {columns.map((data: string, index: number) => (
+                        <select onChange={ (e: React.ChangeEvent<HTMLSelectElement>) => handleSelector(e, wordIndex1)}>
+                            {columns1.current.map((data: string, index: number) => (
                                 <option key={index} value={data}>{data}</option>
                             ))}
                         </select>
-                        <select onChange={ (e: any) => setTranslationIndex(columns.indexOf(e.target.value))}>
-                            {columns.reverse().map((data: string, index: number) => (
+                        <select onChange={ (e: React.ChangeEvent<HTMLSelectElement>) => handleSelector(e, translationIndex1)}>
+                            {columns1.current.map((data: string, index: number) => (
                                 <option key={index} value={data}>{data}</option>
                             ))}
                         </select>
@@ -61,16 +76,10 @@ const Grammar = () => {
                     <input className="buttonClass" type="submit" value="Generate" />
                 </form>
 
-                {sheetData === undefined ? <></>:
-                    <SheetRows 
-                    sheet={sheetData} 
-                    wordIndex={wordIndex} 
-                    translationIndex={translationIndex}
-                    />
-                }
+                {sheetData.length === 0 && <SheetRows sheet={sheetData}/>}
             </div>
         </main>
     );
 }
 
-export default Grammar;
+export default Import;

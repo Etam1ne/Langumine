@@ -14,7 +14,7 @@ const Layout = () => {
                     <Link to="cards">Cards</Link>
                 </li>
                 <li>
-                    <Link to="grammar">Grammar</Link>
+                    <Link to="import">Import</Link>
                 </li>
             </ul>
         </nav>

@@ -1,6 +1,4 @@
 interface Props {
-  wordIndex: number;
-  translationIndex: number;
   sheet: string[][];
 }
 
@@ -15,15 +13,10 @@ export const SheetRows = (props: Props) => {
         </tr>
       </thead>
       <tbody>
-          {props.sheet
-            .filter( (data: string[], index: number) => {
-              if (!data[props.wordIndex] || !data[props.translationIndex] ||index === 0) return false
-              return true;
-            })
-            .map((data: string[], index: number) => (
+          {props.sheet.map((data: string[], index: number) => (
             <tr key={index}>
-                <td>{data[props.wordIndex]}</td>
-                <td>{data[props.translationIndex]}</td>
+                <td>{data[0]}</td>
+                <td>{data[1]}</td>
             </tr>
             ))}
       </tbody>
