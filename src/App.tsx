@@ -3,21 +3,35 @@ import { Provider } from "react-redux";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import ErrorPage from "./pages/ErrorPage";
-import Import from "./pages/Grammar";
+import Import from "./pages/Import";
 import Cards from "./pages/Cards";
 import { store } from "./pages/store";
+import { ThemeProvider } from 'styled-components';
+import { GlobalStyles } from "./GlobalStyles.style";
+
+const theme = {
+  colors: {
+    green: "#116530",
+    lightGreen: "#A3EBB1",
+    lightestGreen: "#edfbef"
+  }
+}
 
 function App() {
   return (
     <Provider store={store}>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />}/>
-          <Route path="cards" element={<Cards />}/>
-          <Route path="import" element={<Import />}/>
-          <Route path="*" element={<ErrorPage />}/>
-        </Route>
-      </Routes>
+      <ThemeProvider theme={theme}>
+        <GlobalStyles />
+    
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />}/>
+            <Route path="cards" element={<Cards />}/>
+            <Route path="import" element={<Import />}/>
+            <Route path="*" element={<ErrorPage />}/>
+          </Route>
+        </Routes>
+        </ThemeProvider>
     </Provider>
   );
 }

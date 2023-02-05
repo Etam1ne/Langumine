@@ -1,3 +1,5 @@
+import { StyledTable } from "./styles/Import.style";
+
 interface Props {
   sheet: string[][];
 }
@@ -5,7 +7,7 @@ interface Props {
 export const SheetRows = (props: Props) => {
 
   return (
-    <table>
+    <StyledTable>
       <thead>
         <tr>
           <th>Word</th>
@@ -20,6 +22,6 @@ export const SheetRows = (props: Props) => {
             </tr>
             ))}
       </tbody>
-    </table>
+    </StyledTable>
   )
 }

@@ -1,8 +1,10 @@
+import { useState } from "react";
+import { StyledButton } from "../components/styles/Button.style"
+import { MainContainer, CardContainer, CardTypesContainer, CardType, Card } from "../components/styles/Cards.style";
 import cards from "../images/cards.svg";
 import repeat from "../images/repeat.svg";
 import arrowLeft from "../images/arrowLeft.svg";
 import arrowRight from "../images/arrowRight.svg";
-import { useState } from "react";
 
 const Cards = () => {
 
@@ -17,33 +19,45 @@ const Cards = () => {
     }
 
     return (
-        <div id="cardsMain">
-            <div id="cardContainer">
+        <MainContainer>
+            <CardContainer>
                 <h1>Pack name</h1>
-                <div id="cardsType">
-                    <div className="cardType">
-                        <img src={cards} alt="All cards" />
+                <CardTypesContainer>
+                    <CardType>
+                        <img
+                            src={cards} 
+                            alt="All cards" 
+                        />
                         <span>All</span>
-                    </div>
-                    <div className="cardType">
-                        <img src={repeat} alt="Learning cards" />
+                    </CardType>
+                    <CardType>
+                        <img
+                            src={repeat} 
+                            alt="Learning cards" 
+                        />
                         <span>Learning</span>
-                    </div>
-                </div> 
-                <div id="card">
+                    </CardType>
+                </CardTypesContainer> 
+                <Card>
                     <span>{curentCard + 1}</span>
                     <p>Word</p>
                     <div>
-                        <button className="buttonClass" onClick={previousCard}>
-                            <img src={arrowLeft} alt="Previous card" />
-                        </button>
-                        <button className="buttonClass" onClick={nextCard}>
-                            <img src={arrowRight} alt="Next card" />
-                        </button>
+                        <StyledButton className="buttonClass" onClick={previousCard}>
+                            <img
+                                src={arrowLeft} 
+                                alt="Previous card" 
+                            />
+                        </StyledButton>
+                        <StyledButton className="buttonClass" onClick={nextCard}>
+                            <img
+                                src={arrowRight} 
+                                alt="Mext card" 
+                            />
+                        </StyledButton>
                     </div>
-                </div>
-            </div>
-        </div>
+                </Card>
+            </CardContainer>
+        </MainContainer>
     );
 }
 

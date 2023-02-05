@@ -1,14 +1,14 @@
 import { Outlet, Link } from "react-router-dom";
-
+import { StyledNavbar } from "./styles/Navbar.styled";
 import logo from "../images/logo.svg"
 
 const Layout = () => {
     return (
       <>
-        <nav>
+        <StyledNavbar>
             <ul>
                 <li>
-                    <Link to="/"><img id="logo" src={logo} alt="Logo (minimalistic globe)" /></Link>
+                    <Link to="/"><img src={logo} alt="Logo (minimalistic globe)" /></Link>
                 </li>
                 <li>
                     <Link to="cards">Cards</Link>
@@ -17,7 +17,7 @@ const Layout = () => {
                     <Link to="import">Import</Link>
                 </li>
             </ul>
-        </nav>
+        </StyledNavbar>
 
         <Outlet />
       </>  
