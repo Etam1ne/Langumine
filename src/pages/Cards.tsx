@@ -6,7 +6,7 @@ import repeat from "../images/repeat.svg";
 import arrowLeft from "../images/arrowLeft.svg";
 import arrowRight from "../images/arrowRight.svg";
 
-const Cards = () => {
+export const Cards = () => {
 
     const [curentCard, setCurrentCard] = useState<number>(0);
 
@@ -60,5 +60,3 @@ const Cards = () => {
         </MainContainer>
     );
 }
-
-export default Cards;

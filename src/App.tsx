@@ -1,10 +1,10 @@
 import { Routes, Route } from "react-router-dom";
 import { Provider } from "react-redux";
-import Layout from "./components/Layout";
-import Home from "./pages/Home";
-import ErrorPage from "./pages/ErrorPage";
-import Import from "./pages/Import";
-import Cards from "./pages/Cards";
+import { Layout } from "./components/Layout";
+import { Home } from "./pages/Home";
+import { ErrorPage } from "./pages/ErrorPage";
+import { Import } from "./pages/Import";
+import { Cards } from "./pages/Cards";
 import { store } from "./pages/store";
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyles } from "./GlobalStyles.style";

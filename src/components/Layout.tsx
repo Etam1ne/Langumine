@@ -2,7 +2,7 @@ import { Outlet, Link } from "react-router-dom";
 import { StyledNavbar } from "./styles/Navbar.styled";
 import logo from "../images/logo.svg"
 
-const Layout = () => {
+export const Layout = () => {
     return (
       <>
         <StyledNavbar>
@@ -23,5 +23,3 @@ const Layout = () => {
       </>  
     );
 }
-
-export default Layout;

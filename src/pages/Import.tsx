@@ -3,18 +3,18 @@ import { read, utils } from "xlsx";
 import { SheetRows } from "../components/SheetRows";
 import { InputContainer, SelectorContainer, StyledForm, StyledSelector, StyledLabel, StyledSubmit } from "../components/styles/Import.style";
 
-const Import = () => {
+export const Import = () => {
 
     const [sheetData, setSheetData] = useState<string[][]>([[]]);
+    const [file, setFile] = useState<string[][]>([[]]);
 
-    const file = useRef<string[][]>([[]]);
     const columns = useRef<string[]>([]);
     const wordIndex = useRef<number>(0);
     const translationIndex = useRef<number>(1);
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const filteredSheet: string[][] = file.current
+        const filteredSheet: string[][] = file
         .filter( (data: string[], index: number) => {
             if (!data[wordIndex.current] || !data[translationIndex.current] ||index === 0) return false
             return true;
@@ -34,10 +34,8 @@ const Import = () => {
             const jsonData: string[][] = utils.sheet_to_json(worksheet, {
                 header: 1
             })
-            file.current = jsonData
+            setFile(jsonData);
             columns.current = jsonData[0];
-            
-            console.log(columns.current.length)
         }
     }
 
@@ -62,7 +60,7 @@ const Import = () => {
                     onChange={(e) => handleFileUpload(e)}
                     />
 
-                    {columns.current.length === 1 ? <></> :
+                    {columns.current.length !== 0 &&
                     <SelectorContainer>
                         <StyledSelector onChange={ (e: React.ChangeEvent<HTMLSelectElement>) => handleSelector(e, wordIndex)}>
                             {columns.current.map((data: string, index: number) => (
@@ -80,10 +78,9 @@ const Import = () => {
                     
                 </StyledForm>
 
-                {sheetData.length === 0 && <SheetRows sheet={sheetData}/>}
+                {sheetData.length !== 1 && <SheetRows sheet={sheetData}/>}
+
             </InputContainer>
         </main>
     );
 }
-
-export default Import;
