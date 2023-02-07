@@ -58,6 +58,10 @@ export const StyledTable = styled.table`
         padding: 5px;
         border: 1px solid ${props => props.theme.colors.green};
     }
+    th:first-child,
+    td:first-child {
+        width: fit-content;
+    }
     th {
         color: ${props => props.theme.colors.green};
     }

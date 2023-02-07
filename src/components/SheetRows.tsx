@@ -10,6 +10,7 @@ export const SheetRows = (props: Props) => {
     <StyledTable>
       <thead>
         <tr>
+          <th>#</th>
           <th>Word</th>
           <th>Translation</th>
         </tr>
@@ -17,6 +18,7 @@ export const SheetRows = (props: Props) => {
       <tbody>
           {props.sheet.map((data: string[], index: number) => (
             <tr key={index}>
+                <td>{index + 1}</td>
                 <td>{data[0]}</td>
                 <td>{data[1]}</td>
             </tr>

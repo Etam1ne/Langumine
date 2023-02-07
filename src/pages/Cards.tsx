@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { StyledButton } from "../components/styles/Button.style"
 import { MainContainer, CardContainer, CardTypesContainer, CardType, Card } from "../components/styles/Cards.style";
+import { useAppSelector } from "../hooks/reduxHooks";
+import { selectTable } from "./store";
 import cards from "../images/cards.svg";
 import repeat from "../images/repeat.svg";
 import arrowLeft from "../images/arrowLeft.svg";
@@ -8,14 +10,24 @@ import arrowRight from "../images/arrowRight.svg";
 
 export const Cards = () => {
 
-    const [curentCard, setCurrentCard] = useState<number>(0);
+    const table: string[][] = useAppSelector(selectTable);
+
+    const [currentCard, setCurrentCard] = useState<number>(0);
 
     const nextCard = () => {
-        setCurrentCard(curentCard + 1)
+        if (currentCard === table.length - 1) {
+            setCurrentCard(0)
+        } else {
+            setCurrentCard(currentCard + 1)
+        }
     }
 
     const previousCard = () => {
-        setCurrentCard(curentCard - 1)
+        if (currentCard === 0) {
+            setCurrentCard(table.length - 1)
+        } else {
+            setCurrentCard(currentCard - 1)
+        }
     }
 
     return (
@@ -39,8 +51,10 @@ export const Cards = () => {
                     </CardType>
                 </CardTypesContainer> 
                 <Card>
-                    <span>{curentCard + 1}</span>
-                    <p>Word</p>
+                    <span>{currentCard + 1}</span>
+                    <p>
+                        {table[currentCard][0]} - {table[currentCard][1]}
+                    </p>
                     <div>
                         <StyledButton className="buttonClass" onClick={previousCard}>
                             <img
