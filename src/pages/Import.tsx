@@ -2,10 +2,14 @@ import React, { useState, useRef } from "react";
 import { read, utils } from "xlsx";
 import { SheetRows } from "../components/SheetRows";
 import { InputContainer, SelectorContainer, StyledForm, StyledSelector, StyledLabel, StyledSubmit } from "../components/styles/Import.style";
+import { useAppDispatch, useAppSelector } from "../hooks/reduxHooks";
+import { loadTable, selectTable } from "./store";
 
 export const Import = () => {
 
-    const [sheetData, setSheetData] = useState<string[][]>([[]]);
+    const table = useAppSelector(selectTable)
+    const dispatch = useAppDispatch();
+
     const [file, setFile] = useState<string[][]>([[]]);
 
     const columns = useRef<string[]>([]);
@@ -22,7 +26,7 @@ export const Import = () => {
         .map((data: string[]) => {
             return [ data[wordIndex.current], data[translationIndex.current]]
         });
-        setSheetData(filteredSheet);
+        dispatch(loadTable(filteredSheet))
     }
 
     const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,8 +82,8 @@ export const Import = () => {
                     
                 </StyledForm>
 
-                {sheetData.length !== 1 && <SheetRows sheet={sheetData}/>}
-
+                {table.length !== 1 && <SheetRows sheet={table}/>}
+                
             </InputContainer>
         </main>
     );

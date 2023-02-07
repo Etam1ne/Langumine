@@ -1,23 +1,31 @@
-import { configureStore, createSlice } from "@reduxjs/toolkit";
+import { configureStore, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState = { value: { } }
+interface tableState {
+    value: string[][]
+}
+
+const initialState: tableState = {
+    value: [[]]
+}
 const tableSlice = createSlice({
     name: "table",
     initialState: initialState,
     reducers: {
-        loadTable: (state, action) => {
+        loadTable: (state, action: PayloadAction<string[][]>) => {
             state.value = action.payload;
-        },
-        clearTable: (state) => {
-            state.value = initialState.value;
         }
     }
 })
 
-export const { loadTable, clearTable } = tableSlice.actions;
+export const { loadTable } = tableSlice.actions;
+
+export const selectTable =  (state: RootState) => state.table.value;
 
 export const store = configureStore({
     reducer: {
         table: tableSlice.reducer,
     }
 });
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
