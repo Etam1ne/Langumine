@@ -4,7 +4,7 @@ import { Layout } from "./components/Layout";
 import { Home } from "./pages/Home";
 import { ErrorPage } from "./pages/ErrorPage";
 import { Import } from "./pages/Import";
-import { Cards } from "./pages/Cards";
+import { Cards } from "./pages/LearnCards";
 import { store } from "./pages/store";
 import { ThemeProvider } from 'styled-components';
 import { GlobalStyles } from "./GlobalStyles.style";

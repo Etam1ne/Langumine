@@ -1,18 +1,17 @@
 import { useState } from "react";
-import { StyledButton } from "../components/styles/Button.style"
-import { MainContainer, CardContainer, CardTypesContainer, CardType, Card } from "../components/styles/Cards.style";
+import { MainContainer, CardContainer, CardTypesContainer, CardType } from "../components/styles/Cards.style";
 import { useAppSelector } from "../hooks/reduxHooks";
 import { selectTable } from "./store";
 import cards from "../images/cards.svg";
 import repeat from "../images/repeat.svg";
-import arrowLeft from "../images/arrowLeft.svg";
-import arrowRight from "../images/arrowRight.svg";
+import { BasicCard, LearnCard } from "../components/Cards";
 
 export const Cards = () => {
 
     const table: string[][] = useAppSelector(selectTable);
 
     const [currentCard, setCurrentCard] = useState<number>(0);
+    const [cardType, setCardType] = useState<string>("Basic");
 
     const nextCard = () => {
         if (currentCard === table.length - 1) {
@@ -30,19 +29,40 @@ export const Cards = () => {
         }
     }
 
+    const switchCardType = () => {
+        switch (cardType) {
+            case "Basic":
+                return (
+                    <BasicCard 
+                    table={table}
+                    currentCard={currentCard}
+                    nextCard={nextCard}
+                    previousCard={previousCard}
+                    />
+                );
+            case "Learn":
+                return (
+                    <LearnCard 
+                    table={table}
+                    currentCard={currentCard}
+                    />
+                );
+        }
+    }
+
     return (
         <MainContainer>
             <CardContainer>
                 <h1>Pack name</h1>
                 <CardTypesContainer>
-                    <CardType>
+                    <CardType onClick={() => setCardType("Basic")}>
                         <img
                             src={cards} 
                             alt="All cards" 
                         />
                         <span>All</span>
                     </CardType>
-                    <CardType>
+                    <CardType onClick={() => setCardType("Learn")}>
                         <img
                             src={repeat} 
                             alt="Learning cards" 
@@ -50,26 +70,11 @@ export const Cards = () => {
                         <span>Learning</span>
                     </CardType>
                 </CardTypesContainer> 
-                <Card>
-                    <span>{currentCard + 1}</span>
-                    <p>
-                        {table[currentCard][0]} - {table[currentCard][1]}
-                    </p>
-                    <div>
-                        <StyledButton className="buttonClass" onClick={previousCard}>
-                            <img
-                                src={arrowLeft} 
-                                alt="Previous card" 
-                            />
-                        </StyledButton>
-                        <StyledButton className="buttonClass" onClick={nextCard}>
-                            <img
-                                src={arrowRight} 
-                                alt="Mext card" 
-                            />
-                        </StyledButton>
-                    </div>
-                </Card>
+                
+                {switchCardType()}
+                
+
+
             </CardContainer>
         </MainContainer>
     );

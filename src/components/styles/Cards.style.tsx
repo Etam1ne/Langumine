@@ -47,7 +47,7 @@ export const CardType = styled.div`
     }
 `;
 
-export const Card = styled.div`
+export const StyledCard = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
