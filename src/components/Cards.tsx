@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import arrowRight from "../images/arrowRight.svg";
 import arrowLeft from "../images/arrowLeft.svg";
 import { StyledCard } from "./styles/Cards.style";
@@ -38,75 +38,95 @@ export const BasicCard = ({ table, currentCard, previousCard, nextCard }: BasicC
 
 interface LearnCardProps {
     table: string[][],
-    currentCard: number
+    currentCard: number,
+    setCurrentCard: Dispatch<SetStateAction<number>>
 }
 
-export const LearnCard = ({ table, currentCard }: LearnCardProps) => {
+export const LearnCard = ({ table, currentCard, setCurrentCard }: LearnCardProps) => {
 
+    
     interface Question {
-        word?: string,
-        answer1?: string,
-        answer2?: string,
-        answer3?: string,
-        answer4?: string
+        word: string,
+        answers: string[],
+        rightIndex: number
     }
-
+    
     const [randomizedSet, setRandomizedSet] = useState<Question[]>([]);
 
-    const getRandomAnswers = (table: string[][]) => {
-        if (table.length < 4) console.log("not enough items in the table")
+    const isAnswered = useRef<boolean>(false);
 
-        let result: number[] = [];
-        let i: number = 0;
-        while (i < 4) {
-            let random = Math.floor((Math.random() * table.length));
-            result.push(random);
-            i++;
+    const checkAnswer = (e: any, currentCard: number, answer: string) => {
+        if (randomizedSet[currentCard].answers.indexOf(answer) === randomizedSet[currentCard].rightIndex) {
+            e.target.className += " rightAnswer";
+            isAnswered.current = true;
         }
-        return result;
+        else {
+            e.target.className += " wrongAnswer";
+        }
     }
 
-    const assignAnswers = (table: string[][]): Object[] => {
-
-        if (table.length < 4) return [{}]
-
-        return table.map((data: string[]) => {
-            let randoms: number[] = getRandomAnswers(table);
-            return {
-                word: data[0],
-                answer1: table[randoms[0]][1],
-                answer2: table[randoms[1]][1],
-                answer3: table[randoms[2]][1],
-                answer4: table[randoms[3]][1]
-            }
-        });
+    const nextCard = () => {
+        setCurrentCard(currentCard + 1);
+        isAnswered.current = false;
     }
-
+    
     useEffect(() => {
+
+        const getRandomAnswers = (table: string[][]) => {
+            let result: number[] = [];
+            let i: number = 0;
+            while (i < 4) {
+                let random = Math.floor((Math.random() * table.length));
+                result.push(random);
+                i++;
+            }
+            return result;
+        }
+    
+        const assignAnswers = (table: string[][]): Question[] => {
+    
+            if (table.length < 4) return []
+    
+            return table.map((data: string[]) => {
+                let randoms: number[] = getRandomAnswers(table);
+                let result: Question = {
+                    word: data[0],
+                    answers: [
+                        table[randoms[0]][1],
+                        table[randoms[1]][1],
+                        table[randoms[2]][1],
+                        table[randoms[3]][1]
+                    ],
+                    rightIndex: Math.floor(Math.random() * 4)
+                }
+                result.answers[result.rightIndex] = data[1];
+                return result
+            });
+        }
+
         setRandomizedSet(assignAnswers(table));
-    }, [])
+
+    }, [table])
     
     return (
-        <StyledCard>
-            {randomizedSet.length === 1 ? <></> : 
+        <StyledCard onClick={() => isAnswered.current ? nextCard() : undefined}>
+            {randomizedSet.length !== 0 && 
             <>
                 <span>{currentCard + 1}</span>
 
-                <p>{randomizedSet[0].word}</p>
+                <p>{randomizedSet[currentCard].word}</p>
 
                 <div>
-                    <StyledButton>
-                        {randomizedSet[0].answer1}
-                    </StyledButton>
-                    <StyledButton>
-                        {randomizedSet[0].answer2}
-                    </StyledButton>
-                    <StyledButton>
-                        {randomizedSet[0].answer3}
-                    </StyledButton>
-                    <StyledButton>
-                        {randomizedSet[0].answer4}
-                    </StyledButton>
+                    {
+                        randomizedSet[currentCard].answers.map((answer, index) => (
+                            <StyledButton 
+                            key={index} 
+                            onClick={(e: any) => checkAnswer(e, currentCard, answer)}
+                            >
+                                {answer}
+                            </StyledButton>
+                        ))
+                    }
                 </div>
             </>
             }

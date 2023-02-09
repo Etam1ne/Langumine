@@ -13,7 +13,8 @@ const theme = {
   colors: {
     green: "#116530",
     lightGreen: "#A3EBB1",
-    lightestGreen: "#edfbef"
+    lightestGreen: "#edfbef",
+    red: "#ffdde5"
   }
 }
 

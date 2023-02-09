@@ -45,6 +45,7 @@ export const Cards = () => {
                     <LearnCard 
                     table={table}
                     currentCard={currentCard}
+                    setCurrentCard={setCurrentCard}
                     />
                 );
         }
