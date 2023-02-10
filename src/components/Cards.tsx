@@ -12,11 +12,14 @@ interface BasicCardProps {
 }
 
 export const BasicCard = ({ table, currentCard, previousCard, nextCard }: BasicCardProps) => {
+
+    const temp = useRef<string[][]>([...table].sort(() => Math.random() - 0.5));
+
     return (
         <StyledCard>
             <span>{currentCard + 1}</span>
             <p>
-                {table[currentCard][0]} - {table[currentCard][1]}
+                {temp.current[currentCard][0]} - {temp.current[currentCard][1]}
             </p>
             <GridButtons>
                 <StyledButton onClick={previousCard}>
