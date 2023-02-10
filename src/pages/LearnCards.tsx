@@ -74,8 +74,6 @@ export const Cards = () => {
                 
                 {switchCardType()}
                 
-
-
             </CardContainer>
         </MainContainer>
     );

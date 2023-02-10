@@ -19,11 +19,4 @@ export const StyledButton = styled.button`
         width: 2rem;
         height: 2rem;
     }
-
-    &.rightAnswer {
-        background-color: ${props => props.theme.colors.lightGreen};
-    }
-    &.wrongAnswer {
-        background-color: ${props => props.theme.colors.red};
-    }
 `

@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import arrowRight from "../images/arrowRight.svg";
 import arrowLeft from "../images/arrowLeft.svg";
-import { StyledCard } from "./styles/Cards.style";
+import { GridButtons, StyledCard } from "./styles/Cards.style";
 import { StyledButton } from "./styles/Button.style";
 
 interface BasicCardProps {
@@ -18,7 +18,7 @@ export const BasicCard = ({ table, currentCard, previousCard, nextCard }: BasicC
             <p>
                 {table[currentCard][0]} - {table[currentCard][1]}
             </p>
-            <div>
+            <GridButtons>
                 <StyledButton onClick={previousCard}>
                     <img
                         src={arrowLeft} 
@@ -31,7 +31,7 @@ export const BasicCard = ({ table, currentCard, previousCard, nextCard }: BasicC
                         alt="Mext card" 
                     />
                 </StyledButton>
-            </div>
+            </GridButtons>
         </StyledCard>
     );
 }
@@ -44,7 +44,6 @@ interface LearnCardProps {
 
 export const LearnCard = ({ table, currentCard, setCurrentCard }: LearnCardProps) => {
 
-    
     interface Question {
         word: string,
         answers: string[],
@@ -55,17 +54,22 @@ export const LearnCard = ({ table, currentCard, setCurrentCard }: LearnCardProps
 
     const isAnswered = useRef<boolean>(false);
 
-    const checkAnswer = (e: any, currentCard: number, answer: string) => {
+    const checkAnswer = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, currentCard: number, answer: string) => {
         if (randomizedSet[currentCard].answers.indexOf(answer) === randomizedSet[currentCard].rightIndex) {
-            e.target.className += " rightAnswer";
+            e.currentTarget.style.backgroundColor = "#a3ebb1"
             isAnswered.current = true;
         }
         else {
-            e.target.className += " wrongAnswer";
+            e.currentTarget.style.backgroundColor = "#ffdde5"
         }
     }
 
-    const nextCard = () => {
+    const nextCard = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        if (currentCard === (table.length - 1)) return
+        const buttons = e.currentTarget.getElementsByTagName("button");
+        for (let i = 0; i < buttons.length; i++) {
+            buttons[i].style.backgroundColor = "#fff"            
+        }
         setCurrentCard(currentCard + 1);
         isAnswered.current = false;
     }
@@ -77,6 +81,7 @@ export const LearnCard = ({ table, currentCard, setCurrentCard }: LearnCardProps
             let i: number = 0;
             while (i < 4) {
                 let random = Math.floor((Math.random() * table.length));
+                if (result.includes(random)) continue // need to fix this later
                 result.push(random);
                 i++;
             }
@@ -86,8 +91,9 @@ export const LearnCard = ({ table, currentCard, setCurrentCard }: LearnCardProps
         const assignAnswers = (table: string[][]): Question[] => {
     
             if (table.length < 4) return []
-    
-            return table.map((data: string[]) => {
+            let temp = [...table]
+            temp.sort(() => Math.random() - 0.5)
+            return temp.map((data: string[]) => {
                 let randoms: number[] = getRandomAnswers(table);
                 let result: Question = {
                     word: data[0],
@@ -99,6 +105,10 @@ export const LearnCard = ({ table, currentCard, setCurrentCard }: LearnCardProps
                     ],
                     rightIndex: Math.floor(Math.random() * 4)
                 }
+                if (result.answers.includes(data[1])) {
+                    result.rightIndex = result.answers.indexOf(data[1]);
+                    return result;
+                }
                 result.answers[result.rightIndex] = data[1];
                 return result
             });
@@ -109,14 +119,14 @@ export const LearnCard = ({ table, currentCard, setCurrentCard }: LearnCardProps
     }, [table])
     
     return (
-        <StyledCard onClick={() => isAnswered.current ? nextCard() : undefined}>
+        <StyledCard onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => isAnswered.current ? nextCard(e) : undefined}>
             {randomizedSet.length !== 0 && 
             <>
                 <span>{currentCard + 1}</span>
 
                 <p>{randomizedSet[currentCard].word}</p>
 
-                <div>
+                <GridButtons>
                     {
                         randomizedSet[currentCard].answers.map((answer, index) => (
                             <StyledButton 
@@ -127,7 +137,7 @@ export const LearnCard = ({ table, currentCard, setCurrentCard }: LearnCardProps
                             </StyledButton>
                         ))
                     }
-                </div>
+                </GridButtons>
             </>
             }
         </StyledCard>

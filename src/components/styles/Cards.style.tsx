@@ -66,17 +66,11 @@ export const StyledCard = styled.div`
     p {
         font-size: 32px;
     }
-    div {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        width: 100%;
+`
 
-        button:first-child {
-            border-bottom-left-radius: 20px;
-        }
-        button:last-child {
-            border-bottom-right-radius: 20px;
-        }
-    }
+export const GridButtons = styled.div`
+    display: grid;
+    width: 100%;
+    gap: 1rem;
+    grid-template-columns: 1fr 1fr;
 `
