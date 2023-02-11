@@ -8,6 +8,7 @@ export const StyledButton = styled.button`
     width: 100%;
     height: 4rem;
     border: 1px solid ${props => props.theme.colors.green};
+    border-radius: 10px;
     color: ${props => props.theme.colors.green};
     cursor: pointer;
 

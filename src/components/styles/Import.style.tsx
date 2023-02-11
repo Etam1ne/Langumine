@@ -54,7 +54,7 @@ export const StyledTable = styled.table`
     border: 1px solid ${props => props.theme.colors.green};
     border-collapse: collapse;
     th, td {
-        width: 20rem;
+        width: min(45vw, 20rem);
         padding: 5px;
         border: 1px solid ${props => props.theme.colors.green};
     }

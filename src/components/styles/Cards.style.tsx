@@ -53,18 +53,18 @@ export const StyledCard = styled.div`
     justify-content: space-between;
     align-items: center;
 
-    width: 800px;
-    height: 450px;
+    width: min(800px, 90vw);
+    aspect-ratio: 1.8;
     padding: 1rem;
     border: 1px solid ${props => props.theme.colors.green};
     border-radius: 20px;
 
     span {
-        font-size: 20px;
+        font-size: 1rem;
         color: ${props => props.theme.colors.green};
     }
     p {
-        font-size: 32px;
+        font-size: 1.5rem;
     }
 `
 
