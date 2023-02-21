@@ -19,7 +19,7 @@ const tableSlice = createSlice({
 
 export const { loadTable } = tableSlice.actions;
 
-export const selectTable =  (state: RootState) => state.table.value;
+export const selectTable =  (state: RootState): string[][] => state.table.value;
 
 export const store = configureStore({
     reducer: {

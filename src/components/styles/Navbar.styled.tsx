@@ -1,6 +1,6 @@
-import styled from 'styled-components'
+import styled, { StyledComponent } from 'styled-components'
 
-export const StyledNavbar = styled.nav`
+export const StyledNavbar: StyledComponent<"nav", any, {}, never> = styled.nav`
     position: fixed;
     top: 0;
     width: 100%;

@@ -6,7 +6,7 @@ import cards from "../images/cards.svg";
 import repeat from "../images/repeat.svg";
 import { BasicCard, LearnCard } from "../components/Cards";
 
-export const Cards = () => {
+export const Cards: React.FC = () => {
 
     const table: string[][] = useAppSelector(selectTable);
 

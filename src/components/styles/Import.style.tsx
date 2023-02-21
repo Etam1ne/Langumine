@@ -1,14 +1,14 @@
-import styled from "styled-components";
+import styled, { StyledComponent } from "styled-components";
 
 
-export const InputContainer = styled.div`
+export const InputContainer: StyledComponent<"div", any, {}, never> = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
     padding-top: 1rem;
 `
-export const StyledForm = styled.form`
+export const StyledForm: StyledComponent<"form", any, {}, never> = styled.form`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -34,12 +34,12 @@ export const StyledForm = styled.form`
     }
 `
 
-export const SelectorContainer = styled.div`
+export const SelectorContainer: StyledComponent<"div", any, {}, never> = styled.div`
     display: flex;
     gap: 1rem;
 `
 
-export const StyledSelector = styled.select`
+export const StyledSelector: StyledComponent<"select", any, {}, never> = styled.select`
     all: unset;
     width: max-content;
     padding: 5px;
@@ -50,7 +50,7 @@ export const StyledSelector = styled.select`
     cursor: pointer;
 `
 
-export const StyledTable = styled.table`
+export const StyledTable: StyledComponent<"table", any, {}, never> = styled.table`
     border: 1px solid ${props => props.theme.colors.green};
     border-collapse: collapse;
     th, td {
@@ -67,7 +67,7 @@ export const StyledTable = styled.table`
     }
 `
 
-export const StyledLabel = styled.label`
+export const StyledLabel: StyledComponent<"label", any, {}, never> = styled.label`
     all: unset;
     display: flex;
     justify-content: center;
@@ -85,7 +85,7 @@ export const StyledLabel = styled.label`
     }
 `
 
-export const StyledSubmit = styled.input`
+export const StyledSubmit: StyledComponent<"input", any, {}, never> = styled.input`
     all: unset;
     display: flex;
     justify-content: center;

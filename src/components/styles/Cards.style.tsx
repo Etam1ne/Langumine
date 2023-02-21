@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled, { StyledComponent } from "styled-components";
 
-export const MainContainer = styled.div`
+export const MainContainer: StyledComponent<"div", any, {}, never> = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8,7 +8,7 @@ export const MainContainer = styled.div`
     height: 100vh;
 `
 
-export const CardContainer = styled.div`
+export const CardContainer: StyledComponent<"div", any, {}, never> = styled.div`
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -21,12 +21,12 @@ export const CardContainer = styled.div`
     }
 `
 
-export const CardTypesContainer = styled.div`
+export const CardTypesContainer: StyledComponent<"div", any, {}, never> = styled.div`
     display: flex;
     gap: 1rem;
 `
 
-export const CardType = styled.div`
+export const CardType: StyledComponent<"div", any, {}, never> = styled.div`
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -47,7 +47,7 @@ export const CardType = styled.div`
     }
 `;
 
-export const StyledCard = styled.div`
+export const StyledCard: StyledComponent<"div", any, {}, never> = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -68,7 +68,7 @@ export const StyledCard = styled.div`
     }
 `
 
-export const GridButtons = styled.div`
+export const GridButtons: StyledComponent<"div", any, {}, never> = styled.div`
     display: grid;
     width: 100%;
     gap: 1rem;

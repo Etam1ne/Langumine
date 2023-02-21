@@ -4,7 +4,7 @@ interface Props {
   sheet: string[][];
 }
 
-export const SheetRows = (props: Props) => {
+export const SheetRows: React.FC<Props> = ({ sheet }) => {
 
   return (
     <StyledTable>
@@ -16,7 +16,7 @@ export const SheetRows = (props: Props) => {
         </tr>
       </thead>
       <tbody>
-          {props.sheet.map((data: string[], index: number) => (
+          {sheet.map((data: string[], index: number) => (
             <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{data[0]}</td>

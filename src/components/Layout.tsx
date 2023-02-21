@@ -2,7 +2,7 @@ import { Outlet, Link } from "react-router-dom";
 import { StyledNavbar } from "./styles/Navbar.styled";
 import logo from "../images/logo.svg"
 
-export const Layout = () => {
+export const Layout: React.FC = () => {
     return (
       <>
         <StyledNavbar>

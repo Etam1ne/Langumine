@@ -1,13 +1,13 @@
 import React, { useState, useRef } from "react";
-import { read, utils } from "xlsx";
+import { read, utils, WorkBook, WorkSheet } from "xlsx";
 import { SheetRows } from "../components/SheetRows";
 import { InputContainer, SelectorContainer, StyledForm, StyledSelector, StyledLabel, StyledSubmit } from "../components/styles/Import.style";
 import { useAppDispatch, useAppSelector } from "../hooks/reduxHooks";
 import { loadTable, selectTable } from "./store";
 
-export const Import = () => {
+export const Import: React.FC = () => {
 
-    const table = useAppSelector(selectTable)
+    const table: string[][] = useAppSelector(selectTable)
     const dispatch = useAppDispatch();
 
     const [file, setFile] = useState<string[][]>([[]]);
@@ -32,9 +32,9 @@ export const Import = () => {
     const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
             const localFile = (e.target.files[0]);
-            const data = await localFile.arrayBuffer();
-            const workbook = read(data);
-            const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+            const data: ArrayBuffer = await localFile.arrayBuffer();
+            const workbook: WorkBook = read(data);
+            const worksheet: WorkSheet = workbook.Sheets[workbook.SheetNames[0]];
             const jsonData: string[][] = utils.sheet_to_json(worksheet, {
                 header: 1
             })

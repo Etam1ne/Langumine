@@ -11,9 +11,9 @@ interface BasicCardProps {
     nextCard(): void,
 }
 
-export const BasicCard = ({ table, currentCard, previousCard, nextCard }: BasicCardProps) => {
+export const BasicCard: React.FC<BasicCardProps> = ({ table, currentCard, previousCard, nextCard }) => {
 
-    const temp = useRef<string[][]>([...table].sort(() => Math.random() - 0.5));
+    const temp: React.MutableRefObject<string[][]> = useRef<string[][]>([...table].sort(() => Math.random() - 0.5));
 
     return (
         <StyledCard>
@@ -45,7 +45,7 @@ interface LearnCardProps {
     setCurrentCard: Dispatch<SetStateAction<number>>
 }
 
-export const LearnCard = ({ table, currentCard, setCurrentCard }: LearnCardProps) => {
+export const LearnCard: React.FC<LearnCardProps> = ({ table, currentCard, setCurrentCard }) => {
 
     interface Question {
         word: string,
@@ -55,7 +55,7 @@ export const LearnCard = ({ table, currentCard, setCurrentCard }: LearnCardProps
     
     const [randomizedSet, setRandomizedSet] = useState<Question[]>([]);
 
-    const isAnswered = useRef<boolean>(false);
+    const isAnswered: React.MutableRefObject<boolean> = useRef<boolean>(false);
 
     const checkAnswer = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, currentCard: number, answer: string) => {
         if (randomizedSet[currentCard].answers.indexOf(answer) === randomizedSet[currentCard].rightIndex) {
@@ -94,7 +94,7 @@ export const LearnCard = ({ table, currentCard, setCurrentCard }: LearnCardProps
         const assignAnswers = (table: string[][]): Question[] => {
     
             if (table.length < 4) return []
-            let temp = [...table]
+            let temp: string[][] = [...table]
             temp.sort(() => Math.random() - 0.5)
             return temp.map((data: string[]) => {
                 let randoms: number[] = getRandomAnswers(table);

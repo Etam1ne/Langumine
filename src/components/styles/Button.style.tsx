@@ -1,6 +1,6 @@
-import styled from "styled-components"
+import styled, { StyledComponent } from "styled-components"
 
-export const StyledButton = styled.button`
+export const StyledButton: StyledComponent<"button", any, {}, never> = styled.button`
     all: unset;
     display: flex;
     justify-content: center;
